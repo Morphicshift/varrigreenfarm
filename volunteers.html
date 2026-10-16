@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Our Volunteers - Varri Green Farm</title><link rel="stylesheet" href="style.css"></head>
+<body><header><h1 class="title"><a href="index.html">VARRI <span>GREEN</span> FARM</a></h1>
+<p class="tag">GROWING IN HARMONY WITH NATURE</p><nav><a href="index.html">Home</a><a href="mission.html">Mission</a><a href="recipes/index.html">Recipes</a><a href="events.html">Events &amp; Tours</a><a href="volunteers.html" class="on">Volunteers</a><a href="contact.html">Contact</a></nav></header>
+<main>
+<h2>OUR VOLUNTEERS</h2>
+<p>Since 2003, this farm has been planted, weeded, harvested and loved by volunteers. To everyone who has ever pulled a weed, picked a mango, worked a market stand or shared a meal here &mdash; thank you. This farm is yours too.</p>
+<div id="vgrid" class="vgrid"></div>
+<script>
+/* =====================================================================
+   VOLUNTEER LIST - EDIT HERE
+   1. Put the photo in the volunteers/ folder (e.g. volunteers/maria.jpg)
+   2. Add one line below:  ["file name", "Name", "optional year or note"],
+      Use "" for the file name to show a "Photo coming soon" card.
+   ===================================================================== */
+var VOLUNTEERS = [
+  ["", "Placeholder Volunteer 1", "Photo coming soon"],
+  ["", "Placeholder Volunteer 2", "Photo coming soon"],
+  ["", "Placeholder Volunteer 3", "Photo coming soon"],
+];
+/* ===================== END OF VOLUNTEER LIST ======================== */
+var g=document.getElementById('vgrid');
+VOLUNTEERS.forEach(function(v){
+  var c=document.createElement('div');c.className='vcard';
+  var pic=v[0]?'<img src="volunteers/'+v[0]+'" alt="'+v[1]+'" loading="lazy">':'<div class="ph">Photo coming soon</div>';
+  c.innerHTML=pic+'<p class="nm">'+v[1]+'</p>'+(v[2]?'<p class="nt">'+v[2]+'</p>':'');
+  g.appendChild(c);
+});
+</script>
+<p><a href="contact.html">Come lend a hand</a> &mdash; we'd love to have you.</p>
+</main><footer>12847 Hwy 441 SE, Okeechobee, FL 34974 &middot; 772-333-8687</footer></body></html>
