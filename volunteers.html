@@ -9,22 +9,21 @@
 <div id="vgrid" class="vgrid"></div>
 <script>
 /* =====================================================================
-   VOLUNTEER LIST - EDIT HERE
+   VOLUNTEER PHOTOS - EDIT HERE
    1. Put the photo in the volunteers/ folder (e.g. volunteers/maria.jpg)
-   2. Add one line below:  ["file name", "Name", "optional year or note"],
-      Use "" for the file name to show a "Photo coming soon" card.
+   2. Add one line below with just the file name:  "maria.jpg",
+      Use "" to show a "Photo coming soon" placeholder card.
    ===================================================================== */
 var VOLUNTEERS = [
-  ["", "Placeholder Volunteer 1", "Photo coming soon"],
-  ["", "Placeholder Volunteer 2", "Photo coming soon"],
-  ["", "Placeholder Volunteer 3", "Photo coming soon"],
+  "",   // placeholder - Photo coming soon
+  "",   // placeholder - Photo coming soon
+  "",   // placeholder - Photo coming soon
 ];
-/* ===================== END OF VOLUNTEER LIST ======================== */
+/* ===================== END OF VOLUNTEER PHOTOS ====================== */
 var g=document.getElementById('vgrid');
-VOLUNTEERS.forEach(function(v){
+VOLUNTEERS.forEach(function(f){
   var c=document.createElement('div');c.className='vcard';
-  var pic=v[0]?'<img src="volunteers/'+v[0]+'" alt="'+v[1]+'" loading="lazy">':'<div class="ph">Photo coming soon</div>';
-  c.innerHTML=pic+'<p class="nm">'+v[1]+'</p>'+(v[2]?'<p class="nt">'+v[2]+'</p>':'');
+  c.innerHTML=f?'<img src="volunteers/'+f+'" alt="Varri Green Farm volunteer" loading="lazy">':'<div class="ph">Photo coming soon</div>';
   g.appendChild(c);
 });
 </script>
