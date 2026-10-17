@@ -2,7 +2,7 @@
   var B='https://abacus.jasoncameron.dev/', K='varrigreenfarm-com/visits';
   var ls=window.localStorage, ss=window.sessionStorage, q=location.search+location.hash;
   try{
-    if(/[?&#]me\b/.test(q)){ ls.setItem('vgf_owner','1'); alert('This browser is now marked as yours. Your visits will not be counted.'); }
+    if(/[?&#]me\b/.test(q)){ ls.setItem('vgf_owner','1'); owner=true; alert('This browser is now marked as yours. Your visits will not be counted.'); }
     if(/[?&#]notme\b/.test(q)){ ls.removeItem('vgf_owner'); }
   }catch(e){}
   var owner=false, done=false;
@@ -13,6 +13,6 @@
   fetch(B+(hit?'hit/':'get/')+K).then(function(r){return r.json();}).then(function(d){
     if(hit){ try{ss.setItem('vgf_counted','1');}catch(e){} }
     var el=document.getElementById('visits');
-    if(el&&typeof d.value==='number'){ el.textContent=d.value.toLocaleString('en-US'); el.parentNode.style.visibility='visible'; }
+    if(el&&owner&&typeof d.value==='number'){ el.parentNode.style.display='block'; el.textContent=d.value.toLocaleString('en-US'); el.parentNode.style.visibility='visible'; }
   }).catch(function(){});
 })();
