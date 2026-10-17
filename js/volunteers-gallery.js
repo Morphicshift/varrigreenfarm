@@ -1,12 +1,15 @@
 /* Varri Green Farm - volunteer photo gallery (no external libraries).
-   Photo list is generated automatically: photos/volunteers/list.json */
+   Photo list: <data-base>/list.json (volunteers list is generated automatically) */
 (function () {
   /* ======== SETTING: shuffle photo order on every visit (true = on, false = off) ======== */
   var SHUFFLE = true;
   /* ===================================================================================== */
-  var BASE = 'photos/volunteers/';
   var grid = document.getElementById('vgal');
   if (!grid) return;
+  /* Other pages can reuse this gallery: <div id="vgal" data-base="photos/workshops/" data-shuffle="false" data-alt="..."> */
+  var BASE = grid.getAttribute('data-base') || 'photos/volunteers/';
+  if (grid.hasAttribute('data-shuffle')) SHUFFLE = grid.getAttribute('data-shuffle') === 'true';
+  var ALT = grid.getAttribute('data-alt') || 'Varri Green Farm volunteer';
   var photos = [], cur = 0, lb, img, count;
 
   function shuffle(a) {
@@ -17,7 +20,7 @@
   function build() {
     lb = document.createElement('div');
     lb.className = 'lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Photo viewer');
-    lb.innerHTML = '<img alt="Varri Green Farm volunteer photo">' +
+    lb.innerHTML = '<img alt="' + ALT + ' photo">' +
       '<button class="lb-prev" aria-label="Previous photo">&#10094;</button>' +
       '<button class="lb-next" aria-label="Next photo">&#10095;</button>' +
       '<button class="lb-close" aria-label="Close">&#10005;</button>' +
@@ -61,7 +64,7 @@
     photos.forEach(function (f, i) {
       var b = document.createElement('button');
       b.type = 'button'; b.setAttribute('aria-label', 'Open photo ' + (i + 1) + ' of ' + photos.length);
-      b.innerHTML = '<img src="' + BASE + 'thumbs/' + f + '" alt="Varri Green Farm volunteer" loading="lazy" width="400" height="400">';
+      b.innerHTML = '<img src="' + BASE + 'thumbs/' + f + '" alt="' + ALT + '" loading="lazy" width="400" height="400">';
       b.onclick = function () { open(i); };
       frag.appendChild(b);
     });
