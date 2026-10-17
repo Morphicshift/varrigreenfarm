@@ -1,0 +1,26 @@
+name: Guestbook keep-alive
+
+# Free Supabase projects pause after 7 days without activity.
+# This reads the public guestbook list every 3 days to keep it awake.
+on:
+  schedule:
+    - cron: '17 9 */3 * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read guestbook list
+        env:
+          SB_URL: https://bgaldjnsiboqivfhwjtt.supabase.co
+          # Publishable key: public by design (same one the website uses).
+          SB_PUB: sb_publishable_ylx3X2czR4tHzm4lbf1sUw_LxRnnIsd
+        run: |
+          code=$(curl -s -o body.json -w '%{http_code}' --max-time 60 \
+            "$SB_URL/rest/v1/guestbook?select=id,name,message,created_at&order=created_at.desc&limit=50" \
+            -H "apikey: $SB_PUB" -H "Authorization: Bearer $SB_PUB")
+          echo "HTTP $code"
+          if [ "$code" != "200" ]; then cat body.json; exit 1; fi

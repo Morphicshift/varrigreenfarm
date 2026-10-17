@@ -9,4 +9,43 @@
 <h3 style="text-align:center;margin:4px 0 10px">Farmer Sal</h3>
 <ul><li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=12847+Hwy+441+SE%2C+Okeechobee%2C+FL+34974" target="_blank" rel="noopener">12847 Hwy 441 SE, Okeechobee, FL 34974</a></li><li>Phone: <a href="tel:+17723338687">772-333-8687</a></li><li>Email: <a href="mailto:sal@varrigreenfarm.com">sal@varrigreenfarm.com</a></li></ul>
 <p><a href="volunteers.html">Come lend a hand</a> &mdash; volunteers are always welcome on the farm.</p>
-</main><footer><span class="fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><a href="https://www.google.com/maps/dir/?api=1&amp;destination=12847+Hwy+441+SE%2C+Okeechobee%2C+FL+34974" target="_blank" rel="noopener">12847 Hwy 441 SE, Okeechobee, FL 34974</a></span><span class="fsep"></span><span class="fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg><a href="tel:+17723338687">772-333-8687</a></span></footer><script src="js/recipe-lightbox.js?v=3"></script><script src="js/visits.js?v=2"></script></body></html>
+<section id="guestbook" class="sec gb" aria-labelledby="gb-title">
+<style>
+.gb{text-align:left}.gb h2{text-align:center}
+.gb .gb-form{background:rgba(0,0,0,.6);border:2px solid #f5a623;border-radius:8px;padding:16px 18px;margin:14px auto 22px;position:relative}
+.gb label{display:block;color:#33cc33;font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-size:1.35em;margin:6px 0 4px}
+.gb input,.gb textarea{box-sizing:border-box;width:100%;background:#0d2a1b;color:#ffd700;border:1px solid #f5a623;border-radius:5px;padding:10px 12px;font:600 1.1em Barlow,Verdana,Arial,sans-serif}
+.gb textarea{min-height:130px;resize:vertical;line-height:1.45}
+.gb input:focus,.gb textarea:focus,.gb button:focus-visible{outline:3px solid #ffd700;outline-offset:2px}
+.gb .gb-hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.gb .gb-left{display:block;font-size:.95em;color:#ffd700;opacity:.85;margin:4px 0 10px;text-align:right}
+.gb button{color:#f5c518;background:transparent;padding:9px 22px;border:2px solid #f5c518;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-weight:600;font-size:1.2em;letter-spacing:.5px;cursor:pointer}
+.gb button:hover,.gb button:focus-visible{background:#f5c518;color:#071c12}.gb button:disabled{opacity:.6;cursor:wait}
+.gb .gb-status,.gb .gb-list-status{min-height:1.4em;margin:10px 0 0;font-size:1.1em}
+.gb .gb-list-status{text-align:center}.gb .gb-ok{color:#33cc33}.gb .gb-err{color:#ff8a65}
+.gb .gb-list{list-style:none;padding:0;margin:0}
+.gb .gb-entry{background:rgba(0,0,0,.55);border:1px solid #f5a623;border-radius:6px;padding:12px 14px;margin:12px 0;font-size:1.1em}
+.gb .gb-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;align-items:baseline}
+.gb .gb-name{color:#f5a623;font-size:1.2em;overflow-wrap:anywhere}.gb .gb-date{color:#33cc33;font-size:.9em}
+.gb .gb-msg{margin:6px 0 0;font-size:1em;white-space:pre-wrap;overflow-wrap:anywhere;color:#ffd700}
+.gb .gb-empty{text-align:center;font-style:italic}
+.gb .gb-morewrap{text-align:center;margin-top:8px}
+@media (max-width:560px){.gb .gb-form{padding:12px}.gb .gb-entry{padding:10px}}
+</style>
+<h2 id="gb-title">SIGN OUR GUESTBOOK</h2>
+<form class="gb-form" novalidate>
+<label for="gb-name">Name</label>
+<input id="gb-name" name="name" type="text" maxlength="60" autocomplete="name" required>
+<label for="gb-message">Message</label>
+<textarea id="gb-message" name="message" maxlength="1000" rows="5" required aria-describedby="gb-left"></textarea>
+<span id="gb-left" class="gb-left" aria-live="polite">1000 characters left</span>
+<div class="gb-hp" aria-hidden="true"><label for="gb-website">Website</label><input id="gb-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+<button type="submit" class="gb-post">Post</button>
+<p class="gb-status" role="status" aria-live="polite"></p>
+</form>
+<p class="gb-empty" hidden>Be the first to sign our guestbook!</p>
+<ul class="gb-list" aria-label="Guestbook messages"></ul>
+<p class="gb-list-status" role="status" aria-live="polite"></p>
+<div class="gb-morewrap"><button type="button" class="gb-more" hidden>Show more</button></div>
+</section>
+</main><footer><span class="fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><a href="https://www.google.com/maps/dir/?api=1&amp;destination=12847+Hwy+441+SE%2C+Okeechobee%2C+FL+34974" target="_blank" rel="noopener">12847 Hwy 441 SE, Okeechobee, FL 34974</a></span><span class="fsep"></span><span class="fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg><a href="tel:+17723338687">772-333-8687</a></span></footer><script src="js/recipe-lightbox.js?v=3"></script><script src="js/visits.js?v=2"></script><script src="js/guestbook.js?v=1"></script></body></html>
