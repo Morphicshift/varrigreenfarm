@@ -9,6 +9,8 @@
     '<img alt="">';
   document.body.appendChild(lb);
   var big = lb.querySelector('img'), cnt = lb.querySelector('.lb-count'), cur = 0, last = null;
+  function fit() { var w = Math.min(window.innerWidth - (window.innerWidth < 560 ? 0 : 120), (window.innerHeight - 100) * (big.naturalWidth && big.naturalHeight ? big.naturalWidth / big.naturalHeight : 1.6)); big.style.cssText = 'width:' + Math.max(w, 200) + 'px;height:auto;max-width:none;max-height:none;object-fit:contain;cursor:zoom-out;image-rendering:auto'; }
+  big.onload = fit; window.addEventListener('resize', function () { if (lb.classList.contains('open')) fit(); });
   function show(i) { cur = (i + imgs.length) % imgs.length; big.src = imgs[cur].src; big.alt = imgs[cur].alt; if (cnt) cnt.textContent = (cur + 1) + ' / ' + imgs.length; }
   function open(i) { last = imgs[i]; lb.classList.add('open'); document.body.classList.add('lb-on'); show(i); lb.querySelector('.lb-close').focus(); }
   function close() { lb.classList.remove('open'); document.body.classList.remove('lb-on'); big.removeAttribute('src'); if (last) last.focus(); }
