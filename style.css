@@ -46,3 +46,5 @@ main.recipe hr.mini{width:30%;border-color:#f5a623}
 /* ---- Embedded video ---- */
 .vid{max-width:900px;margin:20px auto;aspect-ratio:16/9;border:1px solid #f5a623;border-radius:6px;overflow:hidden;background:#000}
 .vid video{width:100%;height:100%;display:block;background:#000}
+.rlb img{width:min(calc(100vw - 120px),calc((100vh - 90px)*1.6));max-width:none;height:auto;max-height:calc(100vh - 90px);object-fit:contain;cursor:zoom-out}
+@media (max-width:560px){.rlb img{width:100vw;max-height:calc(100vh - 120px)}}
