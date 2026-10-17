@@ -71,5 +71,5 @@
     grid.innerHTML = '';
     grid.appendChild(frag);
     build();
-  }).catch(function () { grid.innerHTML = '<p>Photos are loading slowly &mdash; please refresh.</p>'; });
+  }).catch(function () { if (!grid.querySelector('img')) grid.innerHTML = '<p>Photos are loading slowly &mdash; please refresh.</p>'; });
 })();
