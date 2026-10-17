@@ -1,7 +1,7 @@
 body{margin:0;background:#071c12;color:#f5c518;font-family:Barlow,Verdana,Arial,sans-serif;font-weight:600;text-align:center}
 header{padding:14px 10px 0}
 .title{color:#f5c518;font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-weight:700;letter-spacing:2px;font-size:clamp(2.6em,7vw,5.2em);margin:6px 0 0;line-height:1}.title a{color:#ffd700;text-decoration:none}.title span{color:#f5c518}
-.tag{color:#4caf50;font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-weight:600;margin:6px 0 14px;font-size:clamp(1em,2.2vw,1.7em);letter-spacing:.3em}
+.tag{color:#39ff14;text-shadow:0 0 6px rgba(57,255,20,.55),0 0 14px rgba(57,255,20,.3);font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-weight:600;margin:6px 0 14px;font-size:clamp(1em,2.2vw,1.7em);letter-spacing:.3em}
 nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:10px}
 nav a{color:#f5c518;text-decoration:none;padding:8px 14px;border:2px solid #f5c518;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-weight:600;font-size:1.05em;letter-spacing:.5px}
 nav a:hover,nav a.on{background:#f5c518;color:#071c12}
