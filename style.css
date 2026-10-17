@@ -89,3 +89,5 @@ h3{font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-size:1.6em}
 .news li{font-size:1.15em}.news .pub{font-size:1.3em}.news .date{font-size:1em}
 main.wide>p,main.wide>h2{max-width:900px}
 .rcard span{font-size:1.1em}
+.btn-back{display:inline-block;color:#f5c518;text-decoration:none;padding:8px 14px;border:2px solid #f5c518;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-weight:600;font-size:1.05em;letter-spacing:.5px}
+.btn-back:hover{background:#f5c518;color:#071c12}
