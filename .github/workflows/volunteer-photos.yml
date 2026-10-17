@@ -1,0 +1,58 @@
+name: Volunteer photos
+
+# Runs when Sal uploads photos to photos/volunteers/upload/ or deletes a
+# photo from photos/volunteers/large/ (or thumbs/) on GitHub.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'photos/volunteers/upload/**'
+      - 'photos/volunteers/large/**'
+      - 'photos/volunteers/thumbs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # commit the resized photos + list.json back
+  pages: write      # ask GitHub Pages to rebuild after the bot commit
+
+concurrency:
+  group: volunteer-photos
+  cancel-in-progress: false
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Pillow
+        run: pip install --quiet Pillow pillow-heif
+      - name: Resize uploads, strip EXIF, clean orphans, rebuild list.json
+        run: python3 scripts/process_volunteer_photos.py
+      - name: Commit and push
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A photos/volunteers
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"; echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          git commit -m "Volunteer photos: update gallery [bot]"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && break
+            sleep 5
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # Pages is deployed from the main branch ("Deploy from a branch").
+      # Commits pushed with GITHUB_TOKEN don't start a Pages build on their
+      # own, so request one explicitly.
+      - name: Request GitHub Pages build
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sleep 5
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "::warning::Pages build request failed; next push will rebuild"

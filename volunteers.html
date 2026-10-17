@@ -3,29 +3,10 @@
 <title>Our Volunteers - Varri Green Farm</title><link rel="stylesheet" href="style.css"></head>
 <body><header><h1 class="title"><a href="index.html">VARRI <span>GREEN</span> FARM</a></h1>
 <p class="tag">GROWING IN HARMONY WITH NATURE</p><nav><a href="index.html">Home</a><a href="mission.html">Mission</a><a href="recipes/index.html">Recipes</a><a href="events.html">Events &amp; Tours</a><a href="volunteers.html" class="on">Volunteers</a><a href="contact.html">Contact</a></nav></header>
-<main>
+<main class="wide">
 <h2>OUR VOLUNTEERS</h2>
 <p>Since 2003, this farm has been planted, weeded, harvested and loved by volunteers. To everyone who has ever pulled a weed, picked a mango, worked a market stand or shared a meal here &mdash; thank you. This farm is yours too.</p>
-<div id="vgrid" class="vgrid"></div>
-<script>
-/* =====================================================================
-   VOLUNTEER PHOTOS - EDIT HERE
-   1. Put the photo in the volunteers/ folder (e.g. volunteers/maria.jpg)
-   2. Add one line below with just the file name:  "maria.jpg",
-      Use "" to show a "Photo coming soon" placeholder card.
-   ===================================================================== */
-var VOLUNTEERS = [
-  "",   // placeholder - Photo coming soon
-  "",   // placeholder - Photo coming soon
-  "",   // placeholder - Photo coming soon
-];
-/* ===================== END OF VOLUNTEER PHOTOS ====================== */
-var g=document.getElementById('vgrid');
-VOLUNTEERS.forEach(function(f){
-  var c=document.createElement('div');c.className='vcard';
-  c.innerHTML=f?'<img src="volunteers/'+f+'" alt="Varri Green Farm volunteer" loading="lazy">':'<div class="ph">Photo coming soon</div>';
-  g.appendChild(c);
-});
-</script>
+<div id="vgal" class="vgal" aria-label="Volunteer photos"><noscript>Please turn on JavaScript to see our volunteer photos.</noscript></div>
+<script src="js/volunteers-gallery.js"></script>
 <p><a href="contact.html">Come lend a hand</a> &mdash; we'd love to have you.</p>
 </main><footer>12847 Hwy 441 SE, Okeechobee, FL 34974 &middot; 772-333-8687</footer></body></html>
