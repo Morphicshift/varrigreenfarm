@@ -1,5 +1,5 @@
 (function () {
-  var imgs = Array.prototype.slice.call(document.querySelectorAll('main.recipe .rhero, main.recipe .rgal img'));
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('main.recipe .rhero, main.recipe .rgal img, img.zoom'));
   if (!imgs.length) return;
   var lb = document.createElement('div');
   lb.className = 'lb rlb';
