@@ -5,7 +5,7 @@ header{padding:14px 10px 0}
 nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:10px}
 nav a{color:#f5c518;text-decoration:none;padding:8px 14px;border:2px solid #f5c518;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-weight:600;font-size:1.05em;letter-spacing:.5px}
 nav a:hover{background:#f5c518;color:#071c12}
-nav a.on,nav a.on:hover{background:#39ff14;border-color:#39ff14;color:#071c12;box-shadow:0 0 8px rgba(57,255,20,.6)}
+nav a.on,nav a.on:hover{background:#39ff14;border-color:#f5c518;color:#071c12;box-shadow:0 0 8px rgba(57,255,20,.6)}
 main{padding:20px 16px 40px;max-width:720px;margin:0 auto}
 img{max-width:100%;height:auto;display:block;margin:0 auto}
 h1,h2{color:#f5a623}h2{margin:24px 0 8px;font-size:1.4em}
