@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /visitors.html
+
+Sitemap: https://www.varrigreenfarm.com/sitemap.xml
