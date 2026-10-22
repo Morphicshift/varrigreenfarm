@@ -51,6 +51,7 @@
   function show(i) {
     cur = (i + photos.length) % photos.length;
     img.src = BASE + 'large/' + photos[cur];
+    img.alt = ALT + ', photo ' + (cur + 1);
     count.textContent = (cur + 1) + ' / ' + photos.length;
     preload(cur + 1); preload(cur - 1);
   }
@@ -64,7 +65,7 @@
     photos.forEach(function (f, i) {
       var b = document.createElement('button');
       b.type = 'button'; b.setAttribute('aria-label', 'Open photo ' + (i + 1) + ' of ' + photos.length);
-      b.innerHTML = '<img src="' + BASE + 'thumbs/' + f + '" alt="' + ALT + '" loading="lazy" width="400" height="400">';
+      b.innerHTML = '<img src="' + BASE + 'thumbs/' + f + '" alt="' + ALT + ', photo ' + (i + 1) + '" loading="lazy" decoding="async" width="400" height="400">';
       b.onclick = function () { open(i); };
       frag.appendChild(b);
     });
