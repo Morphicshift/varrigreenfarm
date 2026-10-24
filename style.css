@@ -18,13 +18,13 @@ main.home footer,main.home+footer{border-top:1px solid rgba(245,197,24,.4);max-w
 @media (max-width:560px){.title{font-size:1.9em}.tag{letter-spacing:2px;font-size:.85em}footer .fsep{display:none}}
 /* ---- Volunteers photo gallery ---- */
 main.wide{max-width:1100px}main.wide>p,main.wide>h2,main.wide>h1{max-width:720px;margin-left:auto;margin-right:auto}
-.vgal{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:20px 0}
-.vgal button{padding:0;border:1px solid #f5a623;border-radius:4px;background:rgba(0,0,0,.55);cursor:pointer;aspect-ratio:1;overflow:hidden}
-.vgal a{display:block;padding:0;border:1px solid #f5a623;border-radius:4px;background:rgba(0,0,0,.55);cursor:pointer;aspect-ratio:1;overflow:hidden;color:inherit;text-decoration:none}
+.vgal{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:20px auto}
+.vgal button{box-sizing:border-box;width:calc((100% - 36px) / 4);flex:0 0 calc((100% - 36px) / 4);padding:0;border:1px solid #f5a623;border-radius:4px;background:rgba(0,0,0,.55);cursor:pointer;aspect-ratio:1;overflow:hidden}
+.vgal a{box-sizing:border-box;display:block;width:calc((100% - 36px) / 4);flex:0 0 calc((100% - 36px) / 4);padding:0;border:1px solid #f5a623;border-radius:4px;background:rgba(0,0,0,.55);cursor:pointer;aspect-ratio:1;overflow:hidden;color:inherit;text-decoration:none}
 .vgal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
 .vgal button:hover img,.vgal button:focus-visible img,.vgal a:hover img,.vgal a:focus-visible img{transform:scale(1.06)}
-@media (max-width:900px){.vgal{grid-template-columns:repeat(4,1fr)}}
-@media (max-width:560px){.vgal{grid-template-columns:repeat(3,1fr);gap:4px}}
+@media (max-width:980px){.vgal button,.vgal a{width:calc((100% - 24px) / 3);flex-basis:calc((100% - 24px) / 3)}}
+@media (max-width:640px){.vgal{gap:8px}.vgal button,.vgal a{width:calc((100% - 8px) / 2);flex-basis:calc((100% - 8px) / 2)}}
 .lb{position:fixed;inset:0;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;z-index:100;touch-action:pan-y}
 .lb.open{display:flex}
 .lb img{max-width:calc(100vw - 120px);max-height:calc(100vh - 90px);width:auto;height:auto;margin:0;border-radius:4px;user-select:none;-webkit-user-drag:none}
@@ -36,19 +36,21 @@ main.wide{max-width:1100px}main.wide>p,main.wide>h2,main.wide>h1{max-width:720px
 @media (max-width:560px){.lb img{max-width:100vw;max-height:calc(100vh - 120px)}.lb .lb-prev,.lb .lb-next{top:auto;bottom:8px;transform:none}.lb .lb-count{bottom:22px}}
 body.lb-on{overflow:hidden}
 /* ---- Recipes ---- */
-.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin:20px 0}
-.rcard{display:flex;flex-direction:column;background:rgba(0,0,0,.6);border:1px solid #f5a623;border-radius:6px;overflow:hidden;text-decoration:none;color:#ffd700;transition:transform .15s}
+.rgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:20px auto}
+.rcard{box-sizing:border-box;display:flex;flex-direction:column;width:calc((100% - 36px) / 4);flex:0 0 calc((100% - 36px) / 4);background:rgba(0,0,0,.6);border:1px solid #f5a623;border-radius:6px;overflow:hidden;text-decoration:none;color:#ffd700;transition:transform .15s}
 .rcard img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;margin:0}
 .rcard span{padding:10px 8px;font-size:.95em;line-height:1.3}
 .rcard:hover,.rcard:focus-visible{transform:translateY(-3px);background:rgba(0,0,0,.8)}
-@media (max-width:480px){.rgrid{grid-template-columns:repeat(2,1fr);gap:8px}.rcard span{font-size:.85em;padding:8px 6px}}
+@media (max-width:980px){.rcard{width:calc((100% - 24px) / 3);flex-basis:calc((100% - 24px) / 3)}}
+@media (max-width:640px){.rgrid{gap:8px}.rcard{width:calc((100% - 8px) / 2);flex-basis:calc((100% - 8px) / 2)}.rcard span{font-size:.85em;padding:8px 6px}}
 main.recipe .rhero{border:1px solid #f5a623;border-radius:4px;max-width:min(100%,640px)}
 main.recipe h3{color:#33cc33;margin:18px 0 6px;font-size:1.1em}
 main.recipe ul.ing li{margin:2px 0}
 main.recipe hr.mini{width:30%;border-color:#f5a623}
-.rgal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
-.rgal img{border:1px solid #f5a623;border-radius:4px;margin:0}
-@media (max-width:480px){.rgal{grid-template-columns:repeat(2,1fr)}}
+.rgal{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:10px auto}
+.rgal img{box-sizing:border-box;width:calc((100% - 36px) / 4);flex:0 0 calc((100% - 36px) / 4);height:auto;border:1px solid #f5a623;border-radius:4px;margin:0}
+@media (max-width:980px){.rgal img{width:calc((100% - 24px) / 3);flex-basis:calc((100% - 24px) / 3)}}
+@media (max-width:640px){.rgal{gap:8px}.rgal img{width:calc((100% - 8px) / 2);flex-basis:calc((100% - 8px) / 2)}}
 /* ---- Embedded video ---- */
 .vid{max-width:900px;margin:20px auto;aspect-ratio:16/9;border:1px solid #f5a623;border-radius:6px;overflow:hidden;background:#000}
 .vid video{width:100%;height:100%;display:block;background:#000}
@@ -68,10 +70,12 @@ main.recipe hr.mini{width:30%;border-color:#f5a623}
 .past{list-style:none;padding:0;margin:14px auto;max-width:720px}
 .past li{border-bottom:1px solid rgba(245,166,35,.45);padding:8px 4px;font-size:1em}
 .past .date{color:#33cc33;display:block}
-.zgal{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:14px auto;max-width:900px}
-.zgal figure{margin:0;background:rgba(0,0,0,.55);border:1px solid #f5a623;border-radius:6px;overflow:hidden}
+.zgal{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:14px auto;max-width:1040px}
+.zgal figure{box-sizing:border-box;margin:0;width:calc((100% - 36px) / 4);flex:0 0 calc((100% - 36px) / 4);background:rgba(0,0,0,.55);border:1px solid #f5a623;border-radius:6px;overflow:hidden}
 .zgal img{width:100%;aspect-ratio:4/3;object-fit:cover;margin:0}
 .zgal figcaption{font-size:.8em;padding:6px;line-height:1.3}
+@media (max-width:980px){.zgal figure{width:calc((100% - 24px) / 3);flex-basis:calc((100% - 24px) / 3)}}
+@media (max-width:640px){.zgal{gap:8px}.zgal figure{width:calc((100% - 8px) / 2);flex-basis:calc((100% - 8px) / 2)}}
 .grow-list h3{margin-top:18px}
 .grow-list p{margin:4px 0 10px}
 .box{background:rgba(0,0,0,.6);border:2px solid #f5a623;border-radius:8px;padding:14px 16px;max-width:560px;margin:-40px auto 40px}
