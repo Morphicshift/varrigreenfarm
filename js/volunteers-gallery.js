@@ -20,7 +20,8 @@
   function build() {
     lb = document.createElement('div');
     lb.className = 'lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Photo viewer');
-    lb.innerHTML = '<img alt="' + ALT + ' photo">' +
+    lb.innerHTML = '<div class="lbin"><img alt="' + ALT + ' photo">' +
+      '<button class="lb-back" type="button">Back</button></div>' +
       '<button class="lb-prev" aria-label="Previous photo">&#10094;</button>' +
       '<button class="lb-next" aria-label="Next photo">&#10095;</button>' +
       '<button class="lb-close" aria-label="Close">&#10005;</button>' +
@@ -30,6 +31,7 @@
     lb.querySelector('.lb-prev').onclick = function (e) { e.stopPropagation(); go(-1); };
     lb.querySelector('.lb-next').onclick = function (e) { e.stopPropagation(); go(1); };
     lb.querySelector('.lb-close').onclick = close;
+    lb.querySelector('.lb-back').onclick = function (e) { e.stopPropagation(); close(); };
     lb.onclick = function (e) { if (e.target === lb) close(); };
     document.addEventListener('keydown', function (e) {
       if (!lb.classList.contains('open')) return;
