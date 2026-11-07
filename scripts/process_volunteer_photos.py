@@ -8,7 +8,8 @@
 - large/ is the source of truth: a thumb with no matching large file is
   removed (so deleting just the large file deletes the photo); a large
   file with no thumb gets its thumb rebuilt.
-- photos/volunteers/list.json is regenerated (sorted array of file names).
+- photos/volunteers/list.json is regenerated. New photos go first.
+  Older photos stay, in their previous order.
 
 Usage: python3 scripts/process_volunteer_photos.py [--src DIR] [--keep-src]
 """
@@ -77,6 +78,7 @@ def main():
     for d in (THUMBS, LARGE, UPLOAD):
         os.makedirs(d, exist_ok=True)
     added = 0
+    added_names = []
     for fn in sorted(os.listdir(a.src)):
         p = os.path.join(a.src, fn)
         if not os.path.isfile(p) or not fn.lower().endswith(EXTS):
@@ -85,6 +87,7 @@ def main():
         try:
             process(p, name)
             added += 1
+            added_names.append(name)
         except Exception as e:
             print(f"SKIP {fn}: {e}", file=sys.stderr)
             continue
@@ -99,8 +102,32 @@ def main():
     for f in larges:
         if not os.path.exists(os.path.join(THUMBS, f)):
             make_thumb(load_rgb(os.path.join(LARGE, f)), os.path.join(THUMBS, f)); rebuilt += 1
-    names = sorted(larges)
-    with open(os.path.join(BASE, "list.json"), "w") as fh:
+    list_path = os.path.join(BASE, "list.json")
+    old = []
+    if os.path.exists(list_path):
+        try:
+            with open(list_path, encoding="utf-8") as fh:
+                loaded = json.load(fh)
+            if isinstance(loaded, list):
+                old = [n for n in loaded if isinstance(n, str)]
+        except Exception:
+            old = []
+    seen = set()
+    names = []
+    old_set = set(old)
+    for n in list(reversed(added_names)) + sorted(f for f in larges if f not in old_set):
+        if n in larges and n not in seen:
+            names.append(n)
+            seen.add(n)
+    for n in old:
+        if n in larges and n not in seen:
+            names.append(n)
+            seen.add(n)
+    for n in sorted(larges):
+        if n not in seen:
+            names.append(n)
+            seen.add(n)
+    with open(list_path, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(names, fh, separators=(",", ":"))
         fh.write("\n")
     print(f"added={added} orphan_thumbs_removed={removed} thumbs_rebuilt={rebuilt} total={len(names)}")

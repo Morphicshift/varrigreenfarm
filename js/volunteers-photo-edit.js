@@ -192,7 +192,6 @@
     }).then(function (list) {
       if (!Array.isArray(list)) return [];
       return list.filter(function (n) { return typeof n === 'string' && safeRel(n) && n.indexOf('/') === -1; })
-        .sort()
         .map(function (n) { return { name: n, sha: '' }; });
     });
   }
