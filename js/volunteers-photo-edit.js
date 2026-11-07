@@ -32,35 +32,35 @@
   if (!grid || !grid.parentNode) return;
 
   var css = document.createElement('style');
-  css.textContent = '#vgf-photo-edit{max-width:720px;margin:16px auto;padding:12px 14px;border:1px solid #f5a623;border-radius:6px;background:rgba(0,0,0,.55);text-align:center}' +
-    '#vgf-photo-edit p,#vgf-photo-edit label{font-size:1em;line-height:1.45;color:#f5c518}' +
-    '#vgf-photo-edit b{color:#ffd700}' +
-    '#vgf-photo-edit button,#vgf-photo-edit select{font:inherit;color:#071c12;background:#f5c518;border:2px solid #f5a623;border-radius:5px;padding:6px 12px;margin:4px;cursor:pointer}' +
-    '#vgf-photo-edit button.danger{background:#8c1c1c;color:#fff;border-color:#f5a623}' +
-    '#vgf-photo-edit input[type=file]{color:#f5c518;margin:6px auto}' +
-    '#vgf-photo-edit select{max-width:100%}' +
+  css.textContent = '#vgf-photo-edit{max-width:1100px;margin:16px auto;padding:12px 14px;border:1px solid #f5a623;border-radius:6px;background:rgba(0,0,0,.55);text-align:center}' +
+    '#vgf-photo-edit p{font-size:1em;line-height:1.45;color:#f5c518}' +
+    '#vgf-photo-edit button{font:inherit;color:#071c12;background:#f5c518;border:2px solid #f5a623;border-radius:5px;padding:8px 14px;margin:4px;cursor:pointer}' +
+    '#vgf-photo-edit button.on{background:#f5a623}' +
+    '#vgf-photo-edit .add{display:inline-block;background:#33cc33;color:#0b1a0b;padding:12px 22px;border-radius:6px;font-size:1.25em;cursor:pointer;margin:8px}' +
+    '#vgf-photo-edit .add input{display:none}' +
+    '#vgf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin:12px 0;text-align:left}' +
+    '#vgf-grid div{position:relative;border:1px solid #f5a623;border-radius:4px;overflow:hidden;aspect-ratio:1;background:rgba(0,0,0,.55)}' +
+    '#vgf-grid img{width:100%;height:100%;object-fit:cover;display:block}' +
+    '#vgf-grid button.x{position:absolute;top:4px;right:4px;margin:0;padding:4px 8px;background:#8c1c1c;color:#fff;border:2px solid #fff;font-size:.85em}' +
+    '#vgf-photo-edit a{color:#ffd700}' +
     '#vgf-status{min-height:1.4em}';
   document.head.appendChild(css);
 
   var box = document.createElement('div');
   box.id = 'vgf-photo-edit';
-  box.innerHTML = '<p><b>Photo editing</b></p>' +
-    '<label>Album <select id="vgf-album">' +
-    '<option value="volunteers">Volunteers</option>' +
-    '<option value="projects">Farm projects</option>' +
-    '</select></label>' +
-    '<p><input id="vgf-file" type="file" accept="image/*" multiple> <button type="button" id="vgf-add">Add</button></p>' +
-    '<p><label>On the site <select id="vgf-list"></select></label> ' +
-    '<button type="button" id="vgf-del" class="danger">Delete</button> ' +
-    '<button type="button" id="vgf-refresh">Refresh list</button> ' +
-    '<button type="button" id="vgf-hide">Hide editing</button></p>' +
+  box.innerHTML = '<p><label class="add">Add photos<input id="vgf-file" type="file" accept="image/*" multiple></label></p>' +
+    '<p><button type="button" id="vgf-vol" class="on">Volunteers</button>' +
+    '<button type="button" id="vgf-proj">Farm projects</button></p>' +
+    '<div id="vgf-grid"></div>' +
+    '<p><a href="https://github.com/Morphicshift/varrigreenfarm" target="_blank" rel="noopener">Edit any page on GitHub</a>' +
+    ' <button type="button" id="vgf-hide">Hide</button></p>' +
     '<p id="vgf-status"></p>';
   grid.parentNode.insertBefore(box, grid);
 
-  var albumEl = document.getElementById('vgf-album');
   var fileEl = document.getElementById('vgf-file');
-  var listEl = document.getElementById('vgf-list');
+  var gridEl = document.getElementById('vgf-grid');
   var statusEl = document.getElementById('vgf-status');
+  var album = 'volunteers';
   var busy = false;
 
   function say(text) { statusEl.textContent = text; }
@@ -134,22 +134,25 @@
   }
 
   function fill(items) {
-    listEl.innerHTML = '';
-    if (!items.length) {
-      var empty = document.createElement('option');
-      empty.value = '';
-      empty.textContent = '(none)';
-      listEl.appendChild(empty);
-      return;
-    }
+    gridEl.innerHTML = '';
     items.forEach(function (it) {
       var rel = safeRel(it.name);
       if (!rel) return;
-      var opt = document.createElement('option');
-      opt.value = rel;
-      opt.textContent = rel;
-      if (it.sha) opt.setAttribute('data-sha', it.sha);
-      listEl.appendChild(opt);
+      var cell = document.createElement('div');
+      var img = document.createElement('img');
+      img.alt = '';
+      img.loading = 'lazy';
+      img.src = album === 'projects' ? ('photos/projects/' + rel) : ('photos/volunteers/thumbs/' + rel);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'x';
+      btn.textContent = 'Delete';
+      btn.setAttribute('data-name', rel);
+      if (it.sha) btn.setAttribute('data-sha', it.sha);
+      btn.onclick = function () { removeNamed(rel, btn.getAttribute('data-sha') || ''); };
+      cell.appendChild(img);
+      cell.appendChild(btn);
+      gridEl.appendChild(cell);
     });
   }
 
@@ -195,17 +198,18 @@
   }
 
   function refresh() {
-    say('Loading the list...');
-    var job = albumEl.value === 'projects' ? listProjects() : listVolunteers();
+    say('Loading photos...');
+    var job = album === 'projects' ? listProjects() : listVolunteers();
     return job.then(function (items) {
       fill(items);
-      say(listEl.options.length + (albumEl.value === 'projects' ? ' project photos.' : ' volunteer photos.'));
+      say('');
     }).catch(function (err) { say(explain(err)); });
   }
 
   function taken(name) {
-    for (var i = 0; i < listEl.options.length; i++) {
-      if (listEl.options[i].value.toLowerCase() === name.toLowerCase()) return true;
+    var buttons = gridEl.querySelectorAll('button[data-name]');
+    for (var i = 0; i < buttons.length; i++) {
+      if ((buttons[i].getAttribute('data-name') || '').toLowerCase() === name.toLowerCase()) return true;
     }
     return false;
   }
@@ -244,7 +248,7 @@
 
   function addOne(file, index, total) {
     if (file.size > 25 * 1024 * 1024) return Promise.reject(new Error(file.name + ' is over 25 MB.'));
-    if (albumEl.value === 'projects') {
+    if (album === 'projects') {
       var stem = cleanStem(file.name);
       var name = uniqueJpg(stem);
       say('Uploading ' + (index + 1) + ' of ' + total + ': ' + name);
@@ -269,49 +273,54 @@
     });
     chain.then(function () {
       fileEl.value = '';
-      if (albumEl.value === 'projects') {
-        say('Added. Refreshing the list.');
+      if (album === 'projects') {
+        say('Added.');
         return refresh();
       }
-      say('Uploaded. The site resizes volunteer photos and adds them in a minute or two. Refresh the list then.');
+      say('Added. It shows up here in a minute or two.');
     }).catch(function (err) {
       say(explain(err));
     }).then(function () { busy = false; });
   }
 
-  function removeSelected() {
-    var name = safeRel(listEl.value);
-    if (!name) { say('Choose a photo to delete.'); return; }
-    var opt = listEl.options[listEl.selectedIndex];
-    var sha = opt ? (opt.getAttribute('data-sha') || '') : '';
-    var path = albumEl.value === 'projects' ? ('photos/projects/' + name) : ('photos/volunteers/large/' + name);
-    if (albumEl.value !== 'projects' && name.indexOf('/') !== -1) { say('Choose a photo to delete.'); return; }
-    if (!confirm('Delete ' + name + ' from the website?')) return;
+  function removeNamed(name, sha) {
+    name = safeRel(name);
+    if (!name) return;
+    var path = album === 'projects' ? ('photos/projects/' + name) : ('photos/volunteers/large/' + name);
+    if (album !== 'projects' && name.indexOf('/') !== -1) return;
+    if (!confirm('Delete this photo?')) return;
     busy = true;
-    say('Deleting ' + name + '...');
+    say('Deleting...');
     var ready = sha ? Promise.resolve(sha) : gh('GET', path).then(function (info) { return info.sha; });
     ready.then(function (fileSha) {
       if (!fileSha) throw new Error('Could not find that photo.');
-      var message = (albumEl.value === 'projects' ? 'Remove farm project photo ' : 'Remove volunteer photo ') + name;
+      var message = (album === 'projects' ? 'Remove farm project photo ' : 'Remove volunteer photo ') + name;
       return gh('DELETE', path, { message: message, sha: fileSha, branch: 'main' });
     }).then(function () {
-      if (opt && opt.parentNode) opt.parentNode.removeChild(opt);
-      if (albumEl.value === 'projects') say('Deleted ' + name + '.');
-      else say('Deleted ' + name + '. The gallery drops it after the site rebuilds, about a minute.');
+      var btn = gridEl.querySelector('button[data-name="' + name.replace(/"/g, '') + '"]');
+      if (btn && btn.parentNode && btn.parentNode.parentNode) btn.parentNode.parentNode.removeChild(btn.parentNode);
+      say(album === 'projects' ? 'Deleted.' : 'Deleted. It leaves the page in about a minute.');
     }).catch(function (err) {
       if (err && err.status === 404) say('That photo is already gone.');
       else say(explain(err));
     }).then(function () { busy = false; });
   }
 
-  function guard(fn) {
-    return function () { if (!busy) fn(); };
-  }
-
-  document.getElementById('vgf-add').onclick = guard(addAll);
-  document.getElementById('vgf-del').onclick = guard(removeSelected);
-  document.getElementById('vgf-refresh').onclick = guard(refresh);
-  albumEl.onchange = guard(refresh);
+  fileEl.onchange = function () { if (!busy && fileEl.files && fileEl.files.length) addAll(); };
+  document.getElementById('vgf-vol').onclick = function () {
+    if (busy) return;
+    album = 'volunteers';
+    document.getElementById('vgf-vol').className = 'on';
+    document.getElementById('vgf-proj').className = '';
+    refresh();
+  };
+  document.getElementById('vgf-proj').onclick = function () {
+    if (busy) return;
+    album = 'projects';
+    document.getElementById('vgf-proj').className = 'on';
+    document.getElementById('vgf-vol').className = '';
+    refresh();
+  };
   document.getElementById('vgf-hide').onclick = function () {
     try { localStorage.removeItem(KEY_NAME); } catch (e) {}
     if (box.parentNode) box.parentNode.removeChild(box);
