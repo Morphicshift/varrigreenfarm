@@ -100,3 +100,14 @@ main.wide>p,main.wide>h2,main.wide>h1{max-width:900px}
 .rcard span{font-size:1.1em}
 .btn-back{display:inline-block;color:#f5c518;text-decoration:none;padding:8px 14px;border:2px solid #f5c518;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed",Arial Narrow,sans-serif;font-weight:600;font-size:1.05em;letter-spacing:.5px}
 .btn-back:hover{background:#f5c518;color:#071c12}
+/* Farm project cards. Used only on farm-projects.html. */
+.pcard{box-sizing:border-box;background:rgba(0,0,0,.55);border:1px solid rgba(57,255,20,.75);border-radius:10px;padding:2px 16px 16px;margin:18px auto}
+.pcard h2{margin-top:12px}
+.pcard .zgal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px;max-width:100%;margin:14px 0 0}
+.pcard .zgal figure{width:100%;max-width:none;flex:none}
+.pcard .zgal figure:only-child{max-width:520px;justify-self:center}
+@media (max-width:640px){
+.pcard{padding:2px 12px 14px;margin:14px auto}
+.pcard .zgal{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pcard .zgal figure:only-child{max-width:100%;grid-column:1 / -1}
+}
